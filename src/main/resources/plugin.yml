@@ -1,0 +1,30 @@
+name: ElementalSkills
+version: 1.0.0
+main: com.elementalskills.ElementalSkillsPlugin
+api-version: '1.21'
+description: Plugin 8 he nguyen to sinh ton voi Giay Thuc Tinh, moc XP mo chieu vinh vien va /batkinang
+commands:
+  dongy:
+    description: Chap nhan an hue cua nguyen to vua quay duoc
+    usage: /dongy
+  tuchoi:
+    description: Tu choi nguyen to vua quay duoc (mat vinh vien nguyen to & item dai dien do)
+    usage: /tuchoi
+  batkinang:
+    description: Cat do vao kho tam, giu vu khi/cong cu/do an va hien vat pham ky nang da mo khoa
+    usage: /batkinang
+  tatkinang:
+    description: Tat trang thai ky nang va tra lai toan bo tui do goc
+    usage: /tatkinang
+  givegiay:
+    description: Cap Giay Thuc Tinh Nguyen To cho nguoi choi (Admin)
+    permission: elementalskills.admin
+    usage: /givegiay <ten_nguoi_choi> [so_luong]
+  chonhe:
+    description: Mo bang chon he nhanh danh cho Admin test
+    permission: elementalskills.admin
+    aliases: [he, element]
+    usage: /chonhe
+permissions:
+  elementalskills.admin:
+    default: op
