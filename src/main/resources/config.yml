@@ -1,0 +1,9 @@
+# Số Giấy Thức Tỉnh cấp duy nhất 1 lần khi người chơi vào server lần đầu
+starter-scrolls: 2
+
+# Mốc cấp độ XP mở khóa vĩnh viễn cho Chiêu 2, Chiêu 3, Chiêu 4 và Chiêu 5
+unlock-levels:
+  skill-2: 30
+  skill-3: 60
+  skill-4: 100
+  skill-5: 150
