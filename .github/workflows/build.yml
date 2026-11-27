@@ -1,4 +1,4 @@
-name: Build ElementalSkills JAR
+name: Build ElementalSkills v2.0 JAR
 
 on:
   push:
@@ -26,5 +26,5 @@ jobs:
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ElementalSkills-1.0.0
+          name: ElementalSkills-2.0.0
           path: target/*.jar
