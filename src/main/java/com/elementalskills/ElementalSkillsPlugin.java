@@ -1,19 +1,17 @@
 package com.elementalskills;
 
-import com.elementalskills.commands.ElementCommand;
+import com.elementalskills.commands.ElementalCommand;
 import com.elementalskills.elements.ElementRegistry;
-import com.elementalskills.gui.ElementGui;
-import com.elementalskills.managers.CombatInventoryManager;
-import com.elementalskills.managers.SkillExecutionManager;
+import com.elementalskills.gui.ElementSelectGui;
+import com.elementalskills.managers.CombatModeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ElementalSkillsPlugin extends JavaPlugin {
 
     private ElementRegistry elementRegistry;
-    private CombatInventoryManager inventoryManager;
-    private SkillExecutionManager executionManager;
-    private ElementGui elementGui;
+    private CombatModeManager combatModeManager;
+    private ElementSelectGui selectGui;
 
     @Override
     public void onEnable() {
@@ -22,35 +20,31 @@ public class ElementalSkillsPlugin extends JavaPlugin {
         this.elementRegistry = new ElementRegistry();
         this.elementRegistry.registerAllDefaults();
 
-        this.inventoryManager = new CombatInventoryManager(this, elementRegistry);
-        this.executionManager = new SkillExecutionManager(this, elementRegistry, inventoryManager);
-        this.elementGui = new ElementGui(this, elementRegistry, inventoryManager);
+        this.combatModeManager = new CombatModeManager(this, elementRegistry);
+        this.selectGui = new ElementSelectGui(elementRegistry, combatModeManager);
 
-        Bukkit.getPluginManager().registerEvents(inventoryManager, this);
-        Bukkit.getPluginManager().registerEvents(executionManager, this);
-        Bukkit.getPluginManager().registerEvents(elementGui, this);
+        Bukkit.getPluginManager().registerEvents(combatModeManager, this);
+        Bukkit.getPluginManager().registerEvents(selectGui, this);
 
-        ElementCommand cmd = new ElementCommand(inventoryManager, elementGui);
-        for (String name : new String[]{"dongy", "tuchoi", "batkinang", "tatkinang", "givegiay", "chonhe"}) {
+        ElementalCommand cmd = new ElementalCommand(combatModeManager, selectGui);
+        for (String name : new String[]{"batkinang", "chonhe", "dongy", "tuchoi", "givegiay"}) {
             if (getCommand(name) != null) {
                 getCommand(name).setExecutor(cmd);
                 getCommand(name).setTabCompleter(cmd);
             }
         }
 
-        // Vòng lặp kiểm tra ưu/nhược điểm môi trường mỗi 1 giây (20 ticks)
-        Bukkit.getScheduler().runTaskTimer(this, () -> executionManager.tickEnvironments(), 20L, 20L);
+        // Vòng lặp mỗi 1 giây cập nhật cooldown ActionBar và kiểm tra mốc XP mở khóa chiêu
+        Bukkit.getScheduler().runTaskTimer(this, () -> combatModeManager.tickActionBarAndUnlocks(), 20L, 20L);
 
-        getLogger().info("ElementalSkills da khoi dong! Da nap " + elementRegistry.getAll().size() + " he nguyen to.");
+        getLogger().info("ElementalSkills v2.0 da khoi dong! Da nap " + elementRegistry.getAll().size() + " he (100 chieu).");
     }
 
     @Override
     public void onDisable() {
-        if (executionManager != null) {
-            executionManager.cleanupAllTemporaryBlocks();
-        }
-        if (inventoryManager != null) {
-            inventoryManager.restoreAllOnlinePlayers();
+        if (combatModeManager != null) {
+            combatModeManager.restoreAllOnlinePlayers();
+            combatModeManager.saveData();
         }
     }
 }
