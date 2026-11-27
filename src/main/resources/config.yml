@@ -1,0 +1,10 @@
+# Số lượng Giấy Thức Tỉnh cấp duy nhất 1 lần khi người chơi vào server lần đầu
+starter-papers: 2
+
+# Mốc Cấp XP để mở khóa vĩnh viễn Chiêu 2 và Chiêu 3 (không mất khi tiêu XP enchant/sửa đồ)
+unlock-levels:
+  skill-2: 50
+  skill-3: 100
+
+# Nếu người chơi /tuchoi một nguyên tố, vật phẩm đại diện của nguyên tố đó cũng bị hủy vĩnh viễn khi nhặt/chạm vào
+destroy-rejected-representative-item: true
